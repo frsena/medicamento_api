@@ -59,8 +59,13 @@ Uma vez criada a imagem, para executar o container basta executar, **como admini
 OBS: 1 - --network estou definindo uma rede comum para todos os containeres para ter comunicação entre eles.
      2 - Caso alterar o nome do container e não definir o network do container o medicamento_api irá funcionar sozinho, mas o sistema como todo não irá funcionar. 
 
+Caso nao tenha criado a rede executar o comando
 ```
-$ docker run -d -p 5001:5001 --name medicamento_api --network mvp3medicamento medicamentoapi
+docker network create mvp3medicamento
+```
+
+```
+$ docker run -d -p 5001:5001 --name medicamentoapi --network mvp3medicamento medicamento_api
   
 ```
 
