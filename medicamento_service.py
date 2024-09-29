@@ -44,7 +44,7 @@ def busca_todos_medicamentos():
 
 
 @app.get('/pesquisa', tags=[medicamento_tag],
-         responses={"200": ListagemMedicamentoSchema, "400": ErrorSchema})
+         responses={"200": ListagemMedicamentoSchema, "404": ErrorSchema})
 def pesquisa_medicamento(query: PesquisaMedicamento):
     """ pesquisa o medicamento pelo codigo e pela descrição, caso não passe nenhum parametro retorna a lista toda
     """
@@ -60,13 +60,13 @@ def pesquisa_medicamento(query: PesquisaMedicamento):
 
     if not medicamento:
         error_msg = "Não foi encontrado nenhum medicamento."
-        return {"mesage": error_msg}, 400
+        return {"mesage": error_msg}, 404
     else :
         return medicamentos_view(medicamento), 200
 
 
 @app.post('/medicamento', tags=[medicamento_tag],
-         responses={"200": MedicamentoSchema, "400": ErrorSchema})
+         responses={"200": MedicamentoSchema, "404": ErrorSchema})
 def adicionar(form: MedicamentoIncluirSchema):
     """ adiciona um medicamento novo
     """
@@ -84,7 +84,7 @@ def adicionar(form: MedicamentoIncluirSchema):
     except Exception as e:
         # caso um erro fora do previsto
         error_msg = "Não foi possível salvar novo medicamento."
-        return {"mesage": error_msg}, 400   
+        return {"mesage": error_msg}, 404   
 
 
 
@@ -108,7 +108,7 @@ def deletar(query: PesquisaMedicamentoId):
 
     
 @app.put('/atualizar', tags=[medicamento_tag],
-         responses={"200": MedicamentoSchema, "400": ErrorSchema})
+         responses={"200": MedicamentoSchema, "404": ErrorSchema})
 def atualizar(form: MedicamentoAlterarSchema):
     """ atualizar um medicamento cadastrado
     """
@@ -119,7 +119,7 @@ def atualizar(form: MedicamentoAlterarSchema):
     
         if not medicamento:
             error_msg = "Não foi possível atualizar o medicamento."
-            return {"mesage": error_msg}, 400
+            return {"mesage": error_msg}, 404
         
         medicamento.descricao = form.descricao
         medicamento.quantidade_vezes_dia = form.quantidade_vezes_dia
